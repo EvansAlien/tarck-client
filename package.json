@@ -1,0 +1,11 @@
+{
+  "name": "tarck-client",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.umd.js",
+  "module": "index.esm.js",
+  "types": "index.d.ts",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
