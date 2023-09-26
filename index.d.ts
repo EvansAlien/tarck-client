@@ -1,7 +1,6 @@
 interface TrackStatic {
 	/**
-	 * Adds a new key-value pair to the metadata store. If the key already exists
-	 * it will be updated.
+	 * 向 metadata 据存储添加新的键值对, 如果键已经存在，则会更新它
 	 *
 	 * @param {String} key
 	 * @param {String} value
@@ -9,318 +8,304 @@ interface TrackStatic {
 	addMetadata(key: string, value: string): void;
 
 	/**
-	 * Invokes the provided function within a try/catch wrapper that forwards
-	 * the error to Track.
+	 * 在try/catch包装器中调用提供的函数，该包装器将错误转发给Track
 	 *
-	 * @param {Function} func The function to be invoked.
-	 * @param {Object} context The context to invoke the function with.
-	 * @param {...} Additional arguments passed to the function.
-	 * @return {*} Output of the function.
+	 * @param {Function} func 需要调用的函数
+	 * @param {Object} context 内容
+	 * @param {...} Additional arguments.
+	 * @return {*} 输出这个函数
 	 */
 	attempt(func: Function, context?: any, ...args: any[]): any;
 
 	/**
-	 * Configures the instance of Track with the provided configuration.
+	 * 使用提供的配置配置Track实例
 	 *
-	 * @param {Object} options The Configuration object to apply
-	 * @returns {Boolean} True if the configuration was successful.
+	 * @param {Object} options 这个 TrackJSConfigureOptions 配置对象
+	 * @returns {Boolean} true表示配置成功
 	 */
-	configure(options: TrackJSConfigureOptions): boolean;
+	configure(options: TrackConfigureOptions): boolean;
 
 	/**
-	 * Non-exposed browser console logging. Use this private console to prevent
-	 * messages from being exposed into the standard browser console.
+	 * 未公开的浏览器控制台日志记录, 使用此私有控制台可防止消息公开到标准浏览器控制台
 	 */
 	console: {
 		/**
-		 * Records context into the Telemetry log with normal severity
+		 * 将上下文以正常级别记录到 Telemetry 日志中
 		 *
-		 * @param {...} args Arguments to be serialized into the Telemetry log.
+		 * @param {...} args 序列化到 Telemetry 日志中的参数
 		 */
 		log(...args: any[]): void;
 
 		/**
-		 * Records context into the Telemetry log with DEBUG severity
+		 * 以DEBUG级别将上下文记录到 Telemetry 日志中
 		 *
-		 * @param {...} args Arguments to be serialized into the Telemetry log.
+		 * @param {...} args
 		 */
 		debug(...args: any[]): void;
 
 		/**
-		 * Records context into the Telemetry log with INFO severity
+		 * 以INFO级别将上下文记录到 Telemetry 日志中
 		 *
-		 * @param {...} args Arguments to be serialized into the Telemetry log.
+		 * @param {...} args
 		 */
 		info(...args: any[]): void;
 
 		/**
-		 * Records context into the Telemetry log with WARN severity
+		 * 以WARN级别将上下文记录到 Telemetry 日志中
 		 *
-		 * @param {...} args Arguments to be serialized into the Telemetry log.
+		 * @param {...} args
 		 */
 		warn(...args: any[]): void;
 
 		/**
-		 * Records context into the Telemetry log with ERROR severity. If console
-		 * errors are enabled, which is default, this will also transmit an error.
+		 * 以ERROR级别将上下文记录到 Telemetry 日志中, 如果启用了控制台错误，这是默认的，这也将传输一个错误
 		 *
-		 * @param {...} args Arguments to be serialized into the Telemetry log.
+		 * @param {...} args
 		 */
 		error(...args: any[]): void;
 	};
 
 	/**
-	 * Running version of the tracker script
+	 * 跟踪器脚本的运行版本
 	 */
 	hash: string;
 
 	/**
-	 * Installs the agent into the current browser document.
+	 * 安装到浏览器中
 	 *
-	 * @param options The configuration object to apply.
+	 * @param options TrackJSInstallOptions 配置参数
 	 */
-	install(options: TrackJSInstallOptions): boolean;
+	install(options: TrackInstallOptions): boolean;
 
 	/**
-	 * Whether the agent has been installed into the current environment
+	 * 代理是否已安装到当前环境中
 	 *
 	 * @returns {boolean}
 	 */
 	isInstalled(): boolean;
 
 	/**
-	 * Removes a key from the metadata store, if it exists.
+	 * 从 metaData 存储中删除键(如果存在)
 	 *
 	 * @param {String} key
 	 */
 	removeMetadata(key: string): void;
 
 	/**
-	 * Directly invokes an error to be sent to Track.
+	 * 直接调用要发送到Track的错误
 	 *
-	 * @param {Error|Object|String} error The error to be tracked. If error does
-	 *        not have a stacktrace, will attempt to generate one.
+	 * @param {Error|Object|String} error 要跟踪的错误, 如果error没有堆栈跟踪，将尝试生成一个
 	 */
 	track(error: Error | Object | String): void;
 
 	/**
-	 * Running version of the tracker script
+	 * 跟踪器脚本的运行版本
 	 */
 	version: string;
 
 	/**
-	 * Returns a wrapped and watched version of the function to automatically
-	 * catch any errors that may arise.
+	 * 返回函数的包装和监视版本，以自动捕获可能出现的任何错误
 	 *
-	 * @param {Function} func The function to be watched.
-	 * @param {Object} context The context to invoke the function with.
-	 * @return {Function} Wrapped function
+	 * @param {Function} func 监听的函数
+	 * @param {Object} context 调用函数的上下文
+	 * @return {Function} 包装的功能
 	 */
 	watch(func: Function, context?: any): Function;
 
 	/**
-	 * Wrap and watch all of the functions on an object that will
-	 * automatically catch any errors that may arise.
+	 * 包装并监视对象上的所有函数，这些函数将自动捕获可能出现的任何错误
 	 *
-	 * @param {Object} obj The Object containing functions to be watched
-	 * @return {Object} Object now containing wrapped functions.
+	 * @param {Object} obj 包含要监视的函数的对象
+	 * @return {Object} 对象现在包含包装函数
 	 */
 	watchAll(obj: Object): Object;
 }
 
 /**
- * String formatted as an ISO-8601 Date. Example 0000-00-00T00:00:00.000Z
+ * 格式化为ISO-8601日期的字符串. 例子: 0000-00-00T00:00:00.000Z
  */
 export interface ISO8601DateString extends String {}
 
 /**
- * Payload of an error sent to Track. Useful when manipulating errors via
- * the `onError` callback.
+ * 发送到跟踪的错误, 在通过' onError '回调操作错误时非常有用
  */
-export interface TrackJSErrorPayload {
-	/** Stack trace at time of asynchronous callback binding. */
+export interface TrackErrorPayload {
+	/** 异步回调绑定时的堆栈跟踪 */
 	bindStack?: string;
-	/** Timestamp of the asynchronous callback binding. */
+	/** 异步回调绑定的时间戳 */
 	bindTime?: ISO8601DateString;
-	/** Browser Console Telemetry */
+	/** 浏览器控制台 Telemetry */
 	console: {
-		/** Timestamp the event occurred */
+		/** 事件发生的时间戳 */
 		timestamp: ISO8601DateString;
-		/** Console severity of the event */
+		/** 事件的控制台严重性 */
 		severity: string;
-		/** Formatted message captured */
+		/** 捕获的格式化消息 */
 		message: string;
 	}[];
-	/** Context provided about the customer session */
+	/** 用户会话提供的上下文信息 */
 	customer: {
-		/** Customer application id */
+		/** 用户ID */
 		application?: string;
-		/** Unique Id describing the current page view */
+		/** 描述当前页面视图的唯一Id */
 		correlationId: string;
-		/** Customer-provided visitor session ID */
+		/** 用户提供的访客会话ID */
 		sessionId?: string;
-		/** Customer token */
+		/** 用户token */
 		token: string;
-		/** Customer-provided visitor user ID */
+		/** 用户的访客用户ID */
 		userId?: string;
-		/** Customer-provided system version ID */
+		/** 用户提供的版本 */
 		version?: string;
 	};
-	/** How the error was captured. */
+	/** 如何捕获错误 */
 	entry: string;
-	/** Context about the browser environment */
+	/** 浏览器环境的相关信息 */
 	environment: {
-		/** How long the visitor has been on the page in MS */
+		/** 访问者在MS页面上停留了多长时间 */
 		age: number;
-		/** Other discovered JavaScript libraries on the DOM. */
+		/** 在DOM上发现的其他JavaScript库 */
 		dependencies: { [name: string]: string };
-		/** browser userAgent string */
+		/** 浏览器的 userAgent */
 		userAgent: string;
-		/** current window height */
+		/** 当前窗口高度 */
 		viewportHeight: number;
-		/** current window width */
+		/** 当前窗口宽度 */
 		viewportWidth: number;
 	};
-	/** Custom environment metadata. */
+	/** 自定义环境 metadata. */
 	metadata: {
-		/** metadata group name */
+		/** 组名 */
 		key: string;
-		/** metadata value */
+		/** value */
 		value: string;
 	}[];
-	/** Error message */
+	/** 错误信息 */
 	message: string;
-	/** Navigation Telemetry */
+	/** 浏览器 Navigation Telemetry */
 	nav: {
-		/** Timestamp of the navigation event */
+		/** Navigation 事件的时间戳 */
 		on: ISO8601DateString;
-		/** Navigation method used. IE "replaceState" "setState" */
+		/** Navigation 的方法类型. 处理IE "replaceState" "setState" */
 		type: string;
-		/** Previous URL */
+		/** 前一页 */
 		from: string;
-		/** New URL */
+		/** 当前页面 */
 		to: string;
 	}[];
-	/** Network Telemetry */
+	/** 网络 Telemetry */
 	network: {
-		/** Timestamp the request started */
+		/** 请求开始的时间戳 */
 		startedOn: ISO8601DateString;
-		/** Timestamp the request completed */
+		/** 请求完成的时间戳 */
 		completedOn: ISO8601DateString;
-		/** HTTP Method used */
+		/** HTTP 方法 */
 		method: string;
-		/** URL Requested */
+		/** URL */
 		url: string;
 		/** HTTP Status Code */
 		statusCode: number;
 		/** HTTP Status Text */
 		statusText: string;
-		/** Mechanism of network use. IE "fetch", "xhr" */
+		/** 兼容方法. IE "fetch", "xhr" */
 		type: string;
 	}[];
-	/** location of the browser at the time of the error */
+	/** 发生错误时浏览器的路径 */
 	url: string;
-	/** stack trace */
+	/** 堆栈 */
 	stack: string;
-	/** client-reported time the error occurred */
+	/** 客户端报告错误发生的时间 */
 	timestamp: ISO8601DateString;
-	/** Visitor Action Telemetry */
+	/** 行为事件 Telemetry */
 	visitor: {
-		/** timestamp the event occurred */
+		/** 事件发生的时间戳 */
 		timestamp: ISO8601DateString;
-		/** visitor action taken. "input" or "click" */
+		/** 行为事件. "input" or "click" */
 		action: string;
-		/** DOM element acted upon */
+		/** 作用的DOM元素 */
 		element: {
-			/** name of the element tag. IE "input" */
+			/** 元素标签. IE "input" */
 			tag: string;
-			/** hashmap of element attributes */
+			/** 元素 attributes 的哈希映射 */
 			attributes: { [attributeName: string]: string };
-			/** value of the element */
+			/** 元素的值 */
 			value: {
-				/** Number of characters in the value */
+				/** 长度 */
 				length: number;
-				/** Patterns describing the value. */
+				/** 内容行为 */
 				pattern: string;
 			};
 		};
 	}[];
-	/** version of the tracker.js lib */
+	/** Track版本 */
 	version: string;
-	/** Number of messages throttled clientside */
+	/** 客户端节流的消息数 */
 	throttled: number;
 }
 
 /**
- * Configuration options that can be passed to `Track.configure()`
+ * 可以传递给' Track.configure() '的配置选项
  */
-export interface TrackJSConfigureOptions {
+export interface TrackConfigureOptions {
 	/**
-	 * Whether duplicate errors should be suppressed before sending.
+	 * 是否在发送前抑制重复错误
 	 * @default true
 	 */
 	dedupe?: boolean;
 
 	/**
-	 * Whether to attempt discovery of other JavaScript libs on the page.
+	 * 是否尝试在页面上发现其他JavaScript库的依赖
 	 * @default true
 	 */
 	dependencies?: boolean;
 
 	/**
-	 * Custom handler to be notified *before* an error is transmitted. Can be used
-	 * to modify or ignore error data.
+	 * 在发送错误之前通知自定义处理程序, 可用于修改或忽略错误数据
 	 *
-	 * @param {TrackJSErrorPayload} payload Error payload to send to Track.
-	 * @param {Error} error Error object that initiated the capture.
+	 * @param {TrackJSErrorPayload} payload
+	 * @param {Error} error 启动捕获的错误对象
 	 */
-	onError?: (payload: TrackJSErrorPayload, error?: Error) => boolean;
+	onError?: (payload: TrackErrorPayload, error?: Error) => boolean;
 
 	/**
-	 * Custom handler for serializing non-string data in errors and telemetry
-	 * events.
+	 * 序列化错误和遥测中的非字符串数据的自定义处理程序事件
 	 */
 	serialize?: (what: any) => string;
 
 	/**
-	 * Id of the visitor session. Use this to correlate Track
-	 * Error reports with other reporting data.
+	 * 会客使用它将跟踪错误报告与其他报告数据关联起来
 	 */
 	sessionId?: string;
 
 	/**
-	 * Id of the visitor. Use this to identify the current user for support.
+	 * id
 	 */
 	userId?: string;
 
 	/**
-	 * Id of the running application. Recommend to use either a SEMVER
-	 * representation, or a VCS Hash Key.
+	 * 一个版本号
 	 */
 	version?: string;
 }
 
 /**
- * Configuration options that are initialized from `window._trackJs`
+ * 从' window._trackJs '初始化的配置选项
  */
-export interface TrackJSInstallOptions extends TrackJSConfigureOptions {
+export interface TrackInstallOptions extends TrackConfigureOptions {
 	/**
-	 * Track Application token. Get this from `https://my.Track.com/Account/Applications`
+	 * 跟踪令牌
 	 */
 	application?: string;
 
 	callback?: {
 		/**
-		 * Whether errors should be recorded when caught from callback functions.
+		 * 当从回调函数捕获错误时是否应该记录
 		 * @default true
 		 */
 		enabled?: boolean;
 		/**
-		 * Whether stack traces should be generated at the time of invocation of an
-		 * asynchronous action. This will produce stack traces similar to the
-		 * "async" traces in Chrome Developer tools.
-		 * There is a performance impact to enabling this. Confirm behavior in your
-		 * application before releasing.
+		 * 是否应该在调用异步操作时生成堆栈跟踪。这将产生类似于Chrome Developer工具中的“async”跟踪的堆栈跟踪
+		 * 启用此功能会对性能产生影响。在发布之前确认应用程序中的行为
 		 * default false.
 		 */
 		bindStack?: boolean;
@@ -393,13 +378,12 @@ export interface TrackJSInstallOptions extends TrackJSConfigureOptions {
 
 	window?: {
 		/**
-		 * Whether events should be recorded from globally unhandled errors.
+		 * 是否应该从全局未处理的错误记录事件
 		 * @default true
 		 */
 		enabled?: boolean;
 		/**
-		 * Whether events should be recorded from globally unhandled promise
-		 * rejections, if supported.
+		 * 是否全局处理 promise 的错误记录
 		 * @default true
 		 */
 		promise?: boolean;

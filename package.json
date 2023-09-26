@@ -2,10 +2,25 @@
   "name": "tarck-client",
   "version": "1.0.0",
   "description": "",
-  "main": "index.umd.js",
-  "module": "index.esm.js",
+  "main": "dist/index.umd.js",
+  "module": "dist/index.esm.js",
   "types": "index.d.ts",
+  "scripts": {
+    "build": "unbuild",
+    "stub": "unbuild --stub",
+    "test": "vitest"
+  },
   "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "author": {
+    "name": "track-client",
+    "email": "yz6173@gmail.com"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "unbuild": "^2.0.0",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.7.0"
+  }
 }
