@@ -20,7 +20,7 @@ interface TrackStatic {
 	/**
 	 * 使用提供的配置配置Track实例
 	 *
-	 * @param {Object} options 这个 TrackJSConfigureOptions 配置对象
+	 * @param {Object} options 这个 TrackConfigureOptions 配置对象
 	 * @returns {Boolean} true表示配置成功
 	 */
 	configure(options: TrackConfigureOptions): boolean;
@@ -73,7 +73,7 @@ interface TrackStatic {
 	/**
 	 * 安装到浏览器中
 	 *
-	 * @param options TrackJSInstallOptions 配置参数
+	 * @param options TrackInstallOptions 配置参数
 	 */
 	install(options: TrackInstallOptions): boolean;
 
@@ -262,7 +262,7 @@ export interface TrackConfigureOptions {
 	/**
 	 * 在发送错误之前通知自定义处理程序, 可用于修改或忽略错误数据
 	 *
-	 * @param {TrackJSErrorPayload} payload
+	 * @param {TrackErrorPayload} payload
 	 * @param {Error} error 启动捕获的错误对象
 	 */
 	onError?: (payload: TrackErrorPayload, error?: Error) => boolean;
@@ -289,7 +289,7 @@ export interface TrackConfigureOptions {
 }
 
 /**
- * 从' window._trackJs '初始化的配置选项
+ * 从' window._Track '初始化的配置选项
  */
 export interface TrackInstallOptions extends TrackConfigureOptions {
 	/**

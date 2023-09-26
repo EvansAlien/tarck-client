@@ -104,10 +104,10 @@
 				dependencies: !0,
 				enabled: !0,
 				forwardingDomain: '',
-				errorURL: 'https://capture.Track.com/capture',
-				errorNoSSLURL: 'http://capture.Track.com/capture',
-				faultURL: 'https://usage.Track.com/fault.gif',
-				usageURL: 'https://usage.Track.com/usage.gif',
+				errorURL: 'https://testapi.grizzlychina.com/track/logs',
+				errorNoSSLURL: 'https://testapi.grizzlychina.com/track/capture',
+				faultURL: 'https://dummyimage.com/100x100/79f2d4/757575.png&text=XT',
+				usageURL: 'https://dummyimage.com/100x100/79f2d4/757575.png&text=XT',
 				onError: function () {
 					return !0;
 				},
@@ -277,7 +277,7 @@
 		};
 		w.prototype = {
 			discoverDependencies: function () {
-				var a = { Track: '3.10.1' };
+				var a = { Track: '1.2.0' };
 				g.jQuery && g.jQuery.fn && g.jQuery.fn.jquery && (a.jQuery = g.jQuery.fn.jquery);
 				g.jQuery && g.jQuery.ui && g.jQuery.ui.version && (a.jQueryUI = g.jQuery.ui.version);
 				g.angular && g.angular.version && g.angular.version.full && (a.angular = g.angular.version.full);
@@ -295,7 +295,7 @@
 			report: function () {
 				return {
 					age: new Date().getTime() - this.loadedOn,
-					dependencies: this.config.current.dependencies ? this.discoverDependencies() : { Track: '3.10.1' },
+					dependencies: this.config.current.dependencies ? this.discoverDependencies() : { Track: '1.2.0' },
 					originalUrl: this.originalUrl,
 					referrer: this.referrer,
 					userAgent: g.navigator.userAgent,
@@ -557,7 +557,7 @@
 				var b = this.config.current,
 					d = b.errorURL;
 				c.isBrowser && !c.testCrossdomainXhr() && -1 === g.location.protocol.indexOf('https') ? (d = b.errorNoSSLURL) : b.forwardingDomain && (d = 'https://' + b.forwardingDomain + '/capture');
-				return d + '?token=' + a + '&v=3.10.1';
+				return d + '?token=' + a + '&v=1.2.0';
 			},
 			usageEndpoint: function (a) {
 				var b = this.config.current,
@@ -1057,7 +1057,7 @@
 								a.onError('direct', b);
 							}
 						},
-						version: '3.10.1',
+						version: '1.2.0',
 						watch: function (b, e) {
 							return function () {
 								try {
@@ -1112,7 +1112,7 @@
 											stack: e.stack,
 											timestamp: this.util.isoNow(),
 											visitor: this.visitorWatcher.report(),
-											version: '3.10.1',
+											version: '1.2.0',
 										}
 									);
 									if (!f.force)
@@ -1161,7 +1161,7 @@
 					msg: a.message || 'unknown',
 					stack: (a.stack || 'unknown').substr(0, 1e3),
 					url: this.window.location,
-					v: '3.10.1',
+					v: '1.2.0',
 					h: 'fb090f9249a14e8440f317f57bd82ec8d6ea32a4',
 					x: this.util.uuid(),
 				};
